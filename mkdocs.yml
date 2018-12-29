@@ -1,2 +1,18 @@
-site_name: My Docs
-theme: readthedocs
+site_name: Amplifier
+site_description: Amplifier - .NET Core SaaS Application Toolkit official documentation
+site_author: Fabri Damazio
+repo_url: https://github.com/fabridamazio/amplifier/
+
+theme:
+  name: 'material'
+  logo:
+    icon: 'cloud'
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+
+nav:
+    - Introduction: index.md
+    - Quick Start: quick-start.md
