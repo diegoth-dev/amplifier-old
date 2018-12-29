@@ -1,6 +1,8 @@
 # Amplifier - .NET Core SaaS Application Toolkit
 
 [![Join the chat at https://gitter.im/amplifier-saas-toolkit/community](https://badges.gitter.im/amplifier-saas-toolkit/community.svg)](https://gitter.im/amplifier-saas-toolkit/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![CodeFactor](https://www.codefactor.io/repository/github/fabridamazio/amplifier/badge/master)](https://www.codefactor.io/repository/github/fabridamazio/amplifier/overview/master)
+[![Build Status](https://travis-ci.com/FabriDamazio/amplifier.svg?branch=master)](https://travis-ci.com/FabriDamazio/amplifier)
 
 Amplifier is a toolkit for building .NET Core Software As A Service (SaaS) applications.
 
