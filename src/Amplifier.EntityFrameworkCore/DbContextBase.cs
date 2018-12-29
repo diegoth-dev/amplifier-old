@@ -67,7 +67,6 @@ namespace Amplifier.EntityFrameworkCore
                         method.Invoke(this, new object[] { modelBuilder });
                     }
                 }
-
             }
         }
 
