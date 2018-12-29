@@ -4,7 +4,7 @@
 
 Amplifier is a toolkit for building .NET Core Software As A Service (SaaS) applications.
 
-Easy integration with your existing project or use our [starter template](https://github.com/FabriDamazio/amplifier-apisample)
+Easy integration with your new/existing project or you can use the [Amplifier Starter](https://github.com/FabriDamazio/amplifier-starter) template.
 
 Full documentation is available at [documentation website](https://fabridamazio.github.io/amplifier/)  ** **Under Construction** **
 
@@ -61,7 +61,6 @@ Project DbContext needs inherit from `IdentityDbContextBase<TTenant, TUser, TRol
 ```
 
 Project `User` class needs inherit from `IdentityUser`, the `Tenant` class from `TenantBase` and the `Role` class from `IdentityRole`.
-
 
 ### Using
 
