@@ -88,7 +88,6 @@ namespace Amplifier.EntityFrameworkCore.Identity
                         method.Invoke(this, new object[] { modelBuilder });
                     }
                 }
-
             }
         }
 
