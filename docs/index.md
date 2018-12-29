@@ -3,7 +3,7 @@
 Amplifier is a toolkit for building .NET Core Software As A Service (SaaS) applications.
 
 It provides interfaces and middlewares to easily add multi-tenant, auditing and soft delete capabilities to your ASP.NET Core applications.
-You can add Amplifier to your new or existing project or use our starter template.
+You can add Amplifier to your new/existing project or use the [Amplifier Starter](https://github.com/FabriDamazio/amplifier-starter) template.
 
 Amplifier is an open source project and published under [MIT license](https://github.com/FabriDamazio/amplifier/blob/master/LICENSE).
 
