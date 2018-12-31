@@ -16,6 +16,14 @@ The table of contents in the left sidebar should let you easily access the docum
 
 ---
 
+## How Amplifier works
+
+The goal of the project is to provide an easy way to create .NET Core SaaS (software as a service) applications offering features like multi-tenancy, automatic auditing, and soft delete support.
+
+We currently only support the Entity Framework Core ORM. We plan to support other ORMs (such as Dapper) in the future.
+
+See [how Amplifier works](how-it-works.md) in details.
+
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://github.com/FabriDamazio/amplifier/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
