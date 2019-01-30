@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Version>0.6.0</Version>
+    <Version>0.6.1</Version>
     <NeutralLanguage>en</NeutralLanguage>
     <Authors>Fabri Damazio</Authors>
     <Description>.NET Core SaaS Application Toolkit.</Description>
@@ -12,9 +12,8 @@
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/FabriDamazio/amplifier</PackageProjectUrl>
     <RepositoryUrl>https://github.com/FabriDamazio/amplifier</RepositoryUrl>
-    <PackageReleaseNotes>- Add Entity base class
-- Add Value Object support</PackageReleaseNotes>
-    <AssemblyVersion>0.6.0.0</AssemblyVersion>
+    <PackageReleaseNotes>DeletionTime and LastModificationTime now can be null</PackageReleaseNotes>
+    <AssemblyVersion>0.6.1.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
