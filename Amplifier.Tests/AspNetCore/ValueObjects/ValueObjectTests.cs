@@ -82,7 +82,7 @@ namespace Amplifier.Tests
         {
             var value = new ValueObjectTestClass();
 
-            Assert.False(null == value);
+            Assert.False(value == null);
         }
 
         [Fact]
@@ -104,7 +104,7 @@ namespace Amplifier.Tests
         {
             var value = new ValueObjectTestClass();
 
-            Assert.True(null != value);
+            Assert.True(value != null);
         }
 
         [Fact]

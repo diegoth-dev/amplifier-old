@@ -96,7 +96,7 @@ namespace Amplifier.AspNetCore.ValueObjects
         {
             var currentHash = value?.GetHashCode() ?? 0;
 
-            return seed * 23 + currentHash;
+            return (seed * 23) + currentHash;
         }
     }
 }
