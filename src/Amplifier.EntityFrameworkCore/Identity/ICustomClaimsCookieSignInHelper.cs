@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Amplifier.EntityFrameworkCore.Identity
 {
@@ -12,5 +15,13 @@ namespace Amplifier.EntityFrameworkCore.Identity
         where TIdentityUser : IdentityUser<TKey> 
         where TKey : IEquatable<TKey>
     {
+        /// <summary>
+        /// Method for SignIn.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="isPersistent">Set whether the authentication session is persisted across multiple requests.</param>
+        /// <param name="customClaims">Custom claims.</param>
+        /// <returns></returns>
+        Task SignInUserAsync(TIdentityUser user, bool isPersistent, IEnumerable<Claim> customClaims);
     }
 }
