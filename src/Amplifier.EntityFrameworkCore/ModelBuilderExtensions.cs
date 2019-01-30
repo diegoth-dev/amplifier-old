@@ -99,8 +99,8 @@ namespace Amplifier.EntityFrameworkCore
         public static void SetFullAuditingShadowProperty<T, TUser, TKey>(ModelBuilder builder) where T : class, IFullAuditedEntity where TUser : class
         {
             builder.Entity<T>().Property<DateTime>("CreationTime");
-            builder.Entity<T>().Property<DateTime>("LastModificationTime");
-            builder.Entity<T>().Property<DateTime>("DeletionTime");
+            builder.Entity<T>().Property<DateTime?>("LastModificationTime");
+            builder.Entity<T>().Property<DateTime?>("DeletionTime");
             builder.Entity<T>().Property<TKey>("CreationUser");
             builder.Entity<T>().Property<TKey>("LastModificationUser");
             builder.Entity<T>().Property<TKey>("DeletionUser");
