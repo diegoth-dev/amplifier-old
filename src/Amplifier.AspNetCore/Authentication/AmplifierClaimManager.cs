@@ -8,7 +8,7 @@ namespace Amplifier.AspNetCore.Authentication
     /// <summary>
     /// Provides the APIs to generate Amplifier default claims.
     /// </summary>
-    public class AmplifierClaimManager
+    public class AmplifierClaimManager : IAmplifierClaimManager
     {
         /// <summary>
         /// Generate default Amplifier claims.
