@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -23,5 +24,23 @@ namespace Amplifier.EntityFrameworkCore.Identity
         /// <param name="customClaims">Custom claims.</param>
         /// <returns></returns>
         Task SignInUserAsync(TIdentityUser user, bool isPersistent, IEnumerable<Claim> customClaims);
+
+        /// <summary>
+        /// Signs in the specified <paramref name="user"/>.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="authenticationProperties"></param>
+        /// <param name="customClaims"></param>
+        /// <returns></returns>
+        Task SignInUserAsync(TIdentityUser user, AuthenticationProperties authenticationProperties, IEnumerable<Claim> customClaims);
+
+        /// <summary>
+        /// Regenerates the user's application cookie, whilst preserving the existing
+        /// AuthenticationProperties like rememberMe, as an asynchronous operation.
+        /// </summary>
+        /// <param name="user">The user whose sign-in cookie should be refreshed.</param>
+        /// <param name="tenantId">The Tenant unique identifier.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        Task RefreshSignInAsync(TIdentityUser user, string tenantId);
     }
 }

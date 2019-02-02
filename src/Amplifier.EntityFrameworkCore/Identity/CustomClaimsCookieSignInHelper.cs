@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Amplifier.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -17,18 +19,51 @@ namespace Amplifier.EntityFrameworkCore.Identity
         where TKey : IEquatable<TKey>
     {
         private readonly SignInManager<TIdentityUser> _signInManager;
+        private readonly UserManager<TIdentityUser> _userManager;
+        private readonly IAmplifierClaimManager _amplifierClaimManager;
+        private readonly IHttpContextAccessor _contextAccessor;
+        private HttpContext _context;
 
         /// <summary>
         /// CustomClaimsCookieSignInHelper constructor.
         /// </summary>
         /// <param name="signInManager"></param>
-        public CustomClaimsCookieSignInHelper(SignInManager<TIdentityUser> signInManager)
+        /// <param name="contextAccessor"></param>
+        /// <param name="amplifierClaimManager"></param>
+        /// <param name="userManager"></param>
+        public CustomClaimsCookieSignInHelper(SignInManager<TIdentityUser> signInManager,
+                                              IHttpContextAccessor contextAccessor,
+                                              IAmplifierClaimManager amplifierClaimManager,
+                                              UserManager<TIdentityUser> userManager)
         {
             _signInManager = signInManager;
+            _contextAccessor = contextAccessor;
+            _amplifierClaimManager = amplifierClaimManager;
+            _userManager = userManager;
         }
 
         /// <summary>
-        /// Method for SignIn.
+        /// The <see cref="HttpContext"/> used.
+        /// </summary>
+        public HttpContext Context
+        {
+            get
+            {
+                var context = _context ?? _contextAccessor?.HttpContext;
+                if (context == null)
+                {
+                    throw new InvalidOperationException("HttpContext must not be null.");
+                }
+                return context;
+            }
+            set
+            {
+                _context = value;
+            }
+        }
+
+        /// <summary>
+        /// Signs in the specified <paramref name="user"/>.
         /// </summary>
         /// <param name="user">The user.</param>
         /// <param name="isPersistent">Set whether the authentication session is persisted across multiple requests.</param>
@@ -36,14 +71,44 @@ namespace Amplifier.EntityFrameworkCore.Identity
         /// <returns></returns>
         public async Task SignInUserAsync(TIdentityUser user, bool isPersistent, IEnumerable<Claim> customClaims)
         {
+            await SignInUserAsync(user, new AuthenticationProperties { IsPersistent = isPersistent }, customClaims);
+        }
+
+        /// <summary>
+        /// Signs in the specified <paramref name="user"/>.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="authenticationProperties"></param>
+        /// <param name="customClaims"></param>
+        /// <returns></returns>
+        public async Task SignInUserAsync(TIdentityUser user, AuthenticationProperties authenticationProperties, IEnumerable<Claim> customClaims)
+        {
             var claimsPrincipal = await _signInManager.CreateUserPrincipalAsync(user);
             if (customClaims != null && claimsPrincipal?.Identity is ClaimsIdentity claimsIdentity)
             {
                 claimsIdentity.AddClaims(customClaims);
             }
             await _signInManager.Context.SignInAsync(IdentityConstants.ApplicationScheme,
-                claimsPrincipal,
-                new AuthenticationProperties { IsPersistent = isPersistent });
+                claimsPrincipal, authenticationProperties);
         }
+
+        /// <summary>
+        /// Regenerates the user's application cookie, whilst preserving the existing
+        /// AuthenticationProperties like rememberMe, as an asynchronous operation.
+        /// </summary>
+        /// <param name="user">The user whose sign-in cookie should be refreshed.</param>
+        /// <param name="tenantId">The Tenant unique identifier.</param>
+        /// <returns>The task object representing the asynchronous operation.</returns>
+        public virtual async Task RefreshSignInAsync(TIdentityUser user, string tenantId)
+        {
+
+            IList<string> userRolesList = await _userManager.GetRolesAsync(user);
+            var customClaims = _amplifierClaimManager.GenerateDefaultClaims(user.Id.ToString(), user.UserName.ToString(),
+                                                        tenantId, userRolesList);            
+            var auth = await Context.AuthenticateAsync(IdentityConstants.ApplicationScheme);
+            var authenticationMethod = auth?.Principal?.FindFirstValue(ClaimTypes.AuthenticationMethod);
+            await SignInUserAsync(user, auth.Properties.IsPersistent, customClaims);
+        }
+
     }
 }
