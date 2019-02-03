@@ -18,13 +18,13 @@ namespace Amplifier.AspNetCore.Authentication
         /// <param name="tenantId">Tenant unique identifier.</param>
         /// <param name="userRoles">User roles list.</param>
         /// <returns></returns>
-        public Claim[] GenerateDefaultClaims(string userId, string userName, string tenantId, IList<string> userRoles)
+        public IList<Claim> GenerateDefaultClaims(string userId, string userName, string tenantId, IList<string> userRoles)
         {
             if(string.IsNullOrEmpty(userId) && string.IsNullOrEmpty(userName) && string.IsNullOrEmpty(tenantId))
             {
                 throw new ArgumentNullException("Claim cannot be null");
             }
-            var amplifierClaims = new[]
+            var amplifierClaims = new List<Claim>()
             {
                 new Claim("userid", userId, ClaimValueTypes.Integer),
                 new Claim("username", userName, ClaimValueTypes.String),
@@ -32,7 +32,7 @@ namespace Amplifier.AspNetCore.Authentication
             };
 
             IEnumerable<Claim> rolesClaim = userRoles.Select(rn => new Claim("roles", rn, ClaimValueTypes.String));
-            amplifierClaims.Append(new Claim("roles", rolesClaim.ToString(), ClaimValueTypes.String));
+            amplifierClaims.Add(new Claim("roles", rolesClaim.ToString(), ClaimValueTypes.String));
 
             return amplifierClaims;
         }        

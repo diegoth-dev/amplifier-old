@@ -20,7 +20,7 @@ namespace Amplifier.EntityFrameworkCore.Identity
     {
         private readonly SignInManager<TIdentityUser> _signInManager;
         private readonly UserManager<TIdentityUser> _userManager;
-        private readonly IClaimManager _amplifierClaimManager;
+        private readonly IClaimManager _claimManager;
         private readonly IHttpContextAccessor _contextAccessor;
         private HttpContext _context;
 
@@ -29,16 +29,16 @@ namespace Amplifier.EntityFrameworkCore.Identity
         /// </summary>
         /// <param name="signInManager"></param>
         /// <param name="contextAccessor"></param>
-        /// <param name="amplifierClaimManager"></param>
+        /// <param name="claimManager"></param>
         /// <param name="userManager"></param>
         public AmplifierSignInManager(SignInManager<TIdentityUser> signInManager,
                                               IHttpContextAccessor contextAccessor,
-                                              IClaimManager amplifierClaimManager,
+                                              IClaimManager claimManager,
                                               UserManager<TIdentityUser> userManager)
         {
             _signInManager = signInManager;
             _contextAccessor = contextAccessor;
-            _amplifierClaimManager = amplifierClaimManager;
+            _claimManager = claimManager;
             _userManager = userManager;
         }
 
@@ -68,10 +68,11 @@ namespace Amplifier.EntityFrameworkCore.Identity
         /// <param name="user">The user.</param>
         /// <param name="isPersistent">Set whether the authentication session is persisted across multiple requests.</param>
         /// <param name="customClaims">Custom claims.</param>
+        /// <param name="tenantId">Tenant unique identifier.</param>
         /// <returns></returns>
-        public async Task SignInUserAsync(TIdentityUser user, bool isPersistent, IEnumerable<Claim> customClaims)
+        public async Task SignInUserAsync(TIdentityUser user, bool isPersistent, string tenantId,  IList<Claim> customClaims = null)
         {
-            await SignInUserAsync(user, new AuthenticationProperties { IsPersistent = isPersistent }, customClaims);
+            await SignInUserAsync(user, new AuthenticationProperties { IsPersistent = isPersistent }, tenantId, customClaims);
         }
 
         /// <summary>
@@ -80,13 +81,22 @@ namespace Amplifier.EntityFrameworkCore.Identity
         /// <param name="user">The user.</param>
         /// <param name="authenticationProperties"></param>
         /// <param name="customClaims"></param>
+        /// <param name="tenantId"></param>
         /// <returns></returns>
-        public async Task SignInUserAsync(TIdentityUser user, AuthenticationProperties authenticationProperties, IEnumerable<Claim> customClaims)
+        public async Task SignInUserAsync(TIdentityUser user,
+                                          AuthenticationProperties authenticationProperties,
+                                          string tenantId,
+                                          IList<Claim> customClaims = null)
         {
+            IList<string> userRolesList = await _userManager.GetRolesAsync(user);
+            var defaultClaims = _claimManager.GenerateDefaultClaims(user.Id.ToString(), user.UserName.ToString(),
+                                                        tenantId, userRolesList);
             var claimsPrincipal = await _signInManager.CreateUserPrincipalAsync(user);
-            if (customClaims != null && claimsPrincipal?.Identity is ClaimsIdentity claimsIdentity)
+            if (claimsPrincipal?.Identity is ClaimsIdentity claimsIdentity)
             {
-                claimsIdentity.AddClaims(customClaims);
+                claimsIdentity.AddClaims(defaultClaims);
+                if(customClaims != null)
+                    claimsIdentity.AddClaims(customClaims);
             }
             await _signInManager.Context.SignInAsync(IdentityConstants.ApplicationScheme,
                 claimsPrincipal, authenticationProperties);
@@ -98,15 +108,24 @@ namespace Amplifier.EntityFrameworkCore.Identity
         /// </summary>
         /// <param name="user">The user whose sign-in cookie should be refreshed.</param>
         /// <param name="tenantId">The Tenant unique identifier.</param>
+        /// <param name="customClaims">Custom claims list.</param>
         /// <returns>The task object representing the asynchronous operation.</returns>
-        public async Task RefreshSignInAsync(TIdentityUser user, string tenantId)
+        public async Task RefreshSignInAsync(TIdentityUser user, string tenantId, IList<Claim> customClaims = null)
         {
             IList<string> userRolesList = await _userManager.GetRolesAsync(user);
-            var customClaims = _amplifierClaimManager.GenerateDefaultClaims(user.Id.ToString(), user.UserName.ToString(),
-                                                        tenantId, userRolesList);            
+            var defaultClaims = _claimManager.GenerateDefaultClaims(user.Id.ToString(), user.UserName.ToString(),
+                                                        tenantId, userRolesList);
+            if(customClaims != null)
+            {
+                foreach (var claim in customClaims)
+                {
+                    defaultClaims.Add(claim);
+                }
+            }            
+
             var auth = await Context.AuthenticateAsync(IdentityConstants.ApplicationScheme);
             var authenticationMethod = auth?.Principal?.FindFirstValue(ClaimTypes.AuthenticationMethod);
-            await SignInUserAsync(user, auth.Properties.IsPersistent, customClaims);
+            await SignInUserAsync(user, auth.Properties.IsPersistent, tenantId, defaultClaims);
         }
     }
 }

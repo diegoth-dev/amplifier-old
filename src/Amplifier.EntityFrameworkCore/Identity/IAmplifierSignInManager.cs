@@ -21,18 +21,23 @@ namespace Amplifier.EntityFrameworkCore.Identity
         /// </summary>
         /// <param name="user">The user.</param>
         /// <param name="isPersistent">Set whether the authentication session is persisted across multiple requests.</param>
-        /// <param name="customClaims">Custom claims.</param>
+        /// <param name="customClaims">Custom claims list.</param>
+        /// <param name="tenantId">Tenant unique identifier.</param>
         /// <returns></returns>
-        Task SignInUserAsync(TIdentityUser user, bool isPersistent, IEnumerable<Claim> customClaims);
+        Task SignInUserAsync(TIdentityUser user, bool isPersistent, string tenantId, IList<Claim> customClaims = null);
 
         /// <summary>
         /// Signs in the specified <paramref name="user"/>.
         /// </summary>
         /// <param name="user">The user.</param>
         /// <param name="authenticationProperties"></param>
-        /// <param name="customClaims"></param>
+        /// <param name="customClaims">Custom claims list.</param>
+        /// <param name="tenantId">Tenant unique identifier.</param>
         /// <returns></returns>
-        Task SignInUserAsync(TIdentityUser user, AuthenticationProperties authenticationProperties, IEnumerable<Claim> customClaims);
+        Task SignInUserAsync(TIdentityUser user,
+                            AuthenticationProperties authenticationProperties,
+                            string tenantId,
+                            IList<Claim> customClaims = null);
 
         /// <summary>
         /// Regenerates the user's application cookie, whilst preserving the existing
@@ -40,7 +45,8 @@ namespace Amplifier.EntityFrameworkCore.Identity
         /// </summary>
         /// <param name="user">The user whose sign-in cookie should be refreshed.</param>
         /// <param name="tenantId">The Tenant unique identifier.</param>
+        /// <param name="customClaims">Custom claims list.</param>
         /// <returns>The task object representing the asynchronous operation.</returns>
-        Task RefreshSignInAsync(TIdentityUser user, string tenantId);
+        Task RefreshSignInAsync(TIdentityUser user, string tenantId, IList<Claim> customClaims = null);
     }
 }
