@@ -16,7 +16,7 @@ namespace Amplifier.AspNetCore
         public static IServiceCollection AddAmplifier(this IServiceCollection services)
         {
             services.AddScoped(typeof(IUserSession<>), typeof(UserSession<>));            
-            services.AddScoped<IAmplifierClaimManager, AmplifierClaimManager>();
+            services.AddScoped<IClaimManager, ClaimManager>();
             return services;
         }
     }
