@@ -101,7 +101,6 @@ namespace Amplifier.EntityFrameworkCore.Identity
         /// <returns>The task object representing the asynchronous operation.</returns>
         public async Task RefreshSignInAsync(TIdentityUser user, string tenantId)
         {
-
             IList<string> userRolesList = await _userManager.GetRolesAsync(user);
             var customClaims = _amplifierClaimManager.GenerateDefaultClaims(user.Id.ToString(), user.UserName.ToString(),
                                                         tenantId, userRolesList);            
@@ -109,6 +108,5 @@ namespace Amplifier.EntityFrameworkCore.Identity
             var authenticationMethod = auth?.Principal?.FindFirstValue(ClaimTypes.AuthenticationMethod);
             await SignInUserAsync(user, auth.Properties.IsPersistent, customClaims);
         }
-
     }
 }
