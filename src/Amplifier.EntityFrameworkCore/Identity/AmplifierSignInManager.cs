@@ -10,30 +10,30 @@ using System.Threading.Tasks;
 namespace Amplifier.EntityFrameworkCore.Identity
 {
     /// <summary>
-    /// Custom SignIn handler. Let add custom claims. 
+    /// Amplifier SignIn manager.
     /// </summary>
     /// <typeparam name="TIdentityUser">Application user class.</typeparam>
     /// <typeparam name="TKey">User class primary key type</typeparam>
-    public class CustomClaimsCookieSignInHelper<TIdentityUser, TKey> : ICustomClaimsCookieSignInHelper<TIdentityUser, TKey> 
+    public class AmplifierSignInManager<TIdentityUser, TKey> : IAmplifierSignInManager<TIdentityUser, TKey> 
         where TIdentityUser : IdentityUser<TKey> 
         where TKey : IEquatable<TKey>
     {
         private readonly SignInManager<TIdentityUser> _signInManager;
         private readonly UserManager<TIdentityUser> _userManager;
-        private readonly IAmplifierClaimManager _amplifierClaimManager;
+        private readonly IClaimManager _amplifierClaimManager;
         private readonly IHttpContextAccessor _contextAccessor;
         private HttpContext _context;
 
         /// <summary>
-        /// CustomClaimsCookieSignInHelper constructor.
+        /// Amplifier SignIn manager constructor.
         /// </summary>
         /// <param name="signInManager"></param>
         /// <param name="contextAccessor"></param>
         /// <param name="amplifierClaimManager"></param>
         /// <param name="userManager"></param>
-        public CustomClaimsCookieSignInHelper(SignInManager<TIdentityUser> signInManager,
+        public AmplifierSignInManager(SignInManager<TIdentityUser> signInManager,
                                               IHttpContextAccessor contextAccessor,
-                                              IAmplifierClaimManager amplifierClaimManager,
+                                              IClaimManager amplifierClaimManager,
                                               UserManager<TIdentityUser> userManager)
         {
             _signInManager = signInManager;
@@ -99,7 +99,7 @@ namespace Amplifier.EntityFrameworkCore.Identity
         /// <param name="user">The user whose sign-in cookie should be refreshed.</param>
         /// <param name="tenantId">The Tenant unique identifier.</param>
         /// <returns>The task object representing the asynchronous operation.</returns>
-        public virtual async Task RefreshSignInAsync(TIdentityUser user, string tenantId)
+        public async Task RefreshSignInAsync(TIdentityUser user, string tenantId)
         {
 
             IList<string> userRolesList = await _userManager.GetRolesAsync(user);
