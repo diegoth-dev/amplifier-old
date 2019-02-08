@@ -3,6 +3,9 @@ using System.Security.Claims;
 
 namespace Amplifier.AspNetCore.Authentication
 {
+    /// <summary>
+    /// Provides the APIs to generate Amplifier default claims.
+    /// </summary>
     public interface IClaimManager
     {
         /// <summary>

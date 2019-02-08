@@ -4,11 +4,11 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Version>0.8.1</Version>
+    <Version>0.9.0</Version>
     <Authors>Fabri Damazio</Authors>
     <NeutralLanguage>English</NeutralLanguage>
     <PackageTags>amplifier, saas, ef, aspnet core, multi tenancy, entity framework, toolkit</PackageTags>
-    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageReleaseNotes>Improve Repository</PackageReleaseNotes>
     <Description>Entity Framework Core implementation for Amplifier -  .NET Core SaaS Application Toolkit.</Description>
     <PackageLicenseUrl></PackageLicenseUrl>
     <Copyright />

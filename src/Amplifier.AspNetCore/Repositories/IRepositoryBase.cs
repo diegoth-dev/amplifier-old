@@ -20,39 +20,91 @@ namespace Amplifier.AspNetCore.Repositories
         /// </summary>
         /// <param name="entity">Entity to update</param>
         /// <returns>Updated entity</returns>
-        Task<TEntity> Update(TEntity entity);
+        Task<TEntity> UpdateAsync(TEntity entity);
+
+        /// <summary>
+        /// Update an entity.
+        /// </summary>
+        /// <param name="entity">Entity to update</param>
+        /// <returns>Updated entity</returns>
+        TEntity Update(TEntity entity);
 
         /// <summary>
         /// Get all entities by given condition.
         /// </summary>
         /// <param name="expression">Lambda Expression</param>
+        /// <returns>Entities IEnumerable</returns>
+        Task<IEnumerable<TEntity>> GetAllListAsync(Expression<Func<TEntity, bool>> expression);
+
+        /// <summary>
+        /// Get all entities by given condition.
+        /// </summary>        
         /// <returns>IEnumerable of entities</returns>
-        Task<IEnumerable<TEntity>> GetAllBy(Expression<Func<TEntity, bool>> expression);
+        Task<IEnumerable<TEntity>> GetAllListAsync();
+
+        /// <summary>
+        /// Get an IEnumerable from the entire table.
+        /// </summary>
+        /// <param name="expression">Lambda Expression</param>
+        /// <returns>Entities IQueryable.</returns>
+        IEnumerable<TEntity> GetAllList(Expression<Func<TEntity, bool>> expression);
+
+        /// <summary>
+        /// Get an IEnumerable from the entire table.
+        /// </summary>
+        /// <returns>Entities IQueryable.</returns>
+        IEnumerable<TEntity> GetAllList();
 
         /// <summary>
         /// Get an IQueryable from the entire table.
         /// </summary>
-        /// <returns>IQueryable das entidades</returns>
-        IQueryable<TEntity> GetAll();
+        /// <returns>Entities IQueryable.</returns>
+        IQueryable<TEntity> GetAll();        
 
         /// <summary>
         /// Create an Entity.
         /// </summary>
         /// <param name="entity">Entity to create</param>
         /// <returns>Primary key type of the entity</returns>
-        Task<TKey> Create(TEntity entity);
+        Task<TKey> CreateAsync(TEntity entity);
+
+        /// <summary>
+        /// Create an Entity.
+        /// </summary>
+        /// <param name="entity">Entity to create</param>
+        /// <returns>Primary key type of the entity</returns>
+        TKey Create(TEntity entity);
 
         /// <summary>
         /// Delete an entity by given Id.
         /// </summary>
         /// <param name="id">Id of the entity</param>        
-        Task Delete(TKey id);
+        Task DeleteAsync(TKey id);
+
+        /// <summary>
+        /// Delete an entity by given Id.
+        /// </summary>
+        /// <param name="id">Id of the entity</param>        
+        void Delete(TKey id);
+
+        /// <summary>
+        /// Delete an entity.
+        /// </summary>
+        /// <param name="entity">Entity to be deleted.</param>        
+        void Delete(TEntity entity);
 
         /// <summary>
         /// Get an Entity by Id.
         /// </summary>
         /// <param name="id">Id of the entity</param>
         /// <returns>Entity</returns>
-        Task<TEntity> GetById(TKey id);
+        Task<TEntity> GetByIdAsync(TKey id);
+
+        /// <summary>
+        /// Get an Entity by Id.
+        /// </summary>
+        /// <param name="id">Id of the entity</param>
+        /// <returns>Entity</returns>
+        TEntity GetById(TKey id);
     }
 }
