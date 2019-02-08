@@ -46,12 +46,24 @@ namespace Amplifier.EntityFrameworkCore
         private static readonly MethodInfo SetNullableTenantShadowPropertyMethodInfo = typeof(ModelBuilderExtensions).GetMethods(BindingFlags.Public | BindingFlags.Static)
             .Single(t => t.IsGenericMethod && t.Name == "SetNullableTenantShadowProperty");
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="builder"></param>
         public static void SetTenantShadowProperty<T, TEntity>(ModelBuilder builder) where T : class, IHaveTenant where TEntity : class
         {
             builder.Entity<T>().Property<int>("TenantId");
             builder.Entity<T>().HasOne<TEntity>().WithMany().HasForeignKey("TenantId").OnDelete(DeleteBehavior.Restrict);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="builder"></param>
         public static void SetNullableTenantShadowProperty<T, TEntity>(ModelBuilder builder) where T : class, IMayHaveTenant where TEntity : class
         {
             builder.Entity<T>().Property<int?>("TenantId");
@@ -91,11 +103,23 @@ namespace Amplifier.EntityFrameworkCore
         private static readonly MethodInfo SetFullAuditingShadowPropertyPropertyMethodInfo = typeof(ModelBuilderExtensions).GetMethods(BindingFlags.Public | BindingFlags.Static)
             .Single(t => t.IsGenericMethod && t.Name == "SetFullAuditingShadowProperty");
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="builder"></param>
         public static void SetSoftDeleteShadowProperty<T>(ModelBuilder builder) where T : class, ISoftDelete
         {
             builder.Entity<T>().Property<bool>("IsDeleted");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TUser"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <param name="builder"></param>
         public static void SetFullAuditingShadowProperty<T, TUser, TKey>(ModelBuilder builder) where T : class, IFullAuditedEntity where TUser : class
         {
             builder.Entity<T>().Property<DateTime>("CreationTime");

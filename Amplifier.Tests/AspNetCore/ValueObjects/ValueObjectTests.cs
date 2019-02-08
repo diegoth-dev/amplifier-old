@@ -200,8 +200,7 @@ namespace Amplifier.Tests
         }
 
         class MyValue : ValueObject
-        {
-            public int Num;
+        {                        
         }
 
         class MyValue2 : MyValue

@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <Version>0.8.1</Version>
+    <Version>0.9.0</Version>
     <NeutralLanguage>en</NeutralLanguage>
     <Authors>Fabri Damazio</Authors>
     <Description>.NET Core SaaS Application Toolkit.</Description>
@@ -12,8 +12,8 @@
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/FabriDamazio/amplifier</PackageProjectUrl>
     <RepositoryUrl>https://github.com/FabriDamazio/amplifier</RepositoryUrl>
-    <PackageReleaseNotes></PackageReleaseNotes>
-    <AssemblyVersion>0.8.1.0</AssemblyVersion>
+    <PackageReleaseNotes>Improve Repository</PackageReleaseNotes>
+    <AssemblyVersion>0.9.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

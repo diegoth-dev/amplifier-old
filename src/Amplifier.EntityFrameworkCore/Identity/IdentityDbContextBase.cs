@@ -17,6 +17,7 @@ namespace Amplifier.EntityFrameworkCore.Identity
     /// <summary>
     /// Base class for the Entity Framework database context used for identity.
     /// </summary>
+    /// <typeparam name="TTenant">The type of Tenant objects.</typeparam>
     /// <typeparam name="TUser">The type of user objects.</typeparam>
     /// <typeparam name="TRole">The type of role objects.</typeparam>
     /// <typeparam name="TKey">The type of the primary key for users and roles.</typeparam>
