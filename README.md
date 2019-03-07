@@ -1,5 +1,6 @@
 # Amplifier - .NET Core SaaS Application Toolkit
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/859efffe507c473fbdca2960fe4a73a8)](https://app.codacy.com/app/FabriDamazio/amplifier?utm_source=github.com&utm_medium=referral&utm_content=FabriDamazio/amplifier&utm_campaign=Badge_Grade_Dashboard)
 [![Join the chat at https://gitter.im/amplifier-saas-toolkit/community](https://badges.gitter.im/amplifier-saas-toolkit/community.svg)](https://gitter.im/amplifier-saas-toolkit/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![CodeFactor](https://www.codefactor.io/repository/github/fabridamazio/amplifier/badge/master)](https://www.codefactor.io/repository/github/fabridamazio/amplifier/overview/master)
 [![Build Status](https://travis-ci.com/FabriDamazio/amplifier.svg?branch=master)](https://travis-ci.com/FabriDamazio/amplifier)
